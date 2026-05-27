@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Practice Game</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            width: 350px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+
+        input {
+            margin: 10px;
+            padding: 8px;
+            width: 80%;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Array Character Game</h2>
+
+        <p>Enter a character and choose a row/column.</p>
+
+        <input type="text" id="charInput" maxlength="1" placeholder="Enter character">
+        <br>
+
+        <input type="number" id="rowInput" min="0" max="5" placeholder="Row 0-5">
+        <br>
+
+        <input type="number" id="colInput" min="0" max="5" placeholder="Column 0-5">
+        <br>
+
+        <button onclick="checkSpot()">Check Spot</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        let practice = [];
+
+        for (let i = 0; i < 6; i++) {
+            practice[i] = [];
+            for (let j = 0; j < 6; j++) {
+                practice[i][j] = '';
+            }
+        }
+
+        function newBoardGame() {
+
+            let count = 0;
+            while (count < 3) {
+                let y = Math.floor(Math.random() * 6);
+                let x = Math.floor(Math.random() * 6);
+                practice[y][x] = 's';
+                count++;
+            }
+
+            for (let i = 0; i < 2; i++) {
+                let y = Math.floor(Math.random() * 6);
+                let x = Math.floor(Math.random() * 6);
+                practice[y][x] = 'y';
+            }
+
+            let y = Math.floor(Math.random() * 6);
+            let x = Math.floor(Math.random() * 6);
+            practice[y][x] = 'a';
+        }
+
+        newBoardGame();
+
+        function checkSpot() {
+
+            let inputChar = document.getElementById("charInput").value;
+            let row = parseInt(document.getElementById("rowInput").value);
+            let col = parseInt(document.getElementById("colInput").value);
+
+            let result = document.getElementById("result");
+
+            if (isNaN(row) || isNaN(col) || row < 0 || row > 5 || col < 0 || col > 5) {
+                result.innerHTML = "Please enter valid row and column numbers from 0-5.";
+                return;
+            }
+
+            let spot = practice[row][col];
+
+            if (spot === inputChar) {
+                result.innerHTML = "Correct";
+            }
+            else if (spot === 's' || spot === 'y' || spot === 'a') {
+                result.innerHTML = "Different char here: " + spot;
+            }
+            else {
+                result.innerHTML = "No char here";
+            }
+        }
+    </script>
+
+</body>
+</html>
